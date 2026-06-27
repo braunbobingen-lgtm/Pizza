@@ -928,7 +928,24 @@ document.getElementById("closeReport").onclick=()=>{
 document.getElementById("shiftReport").classList.remove("show");
 
 }
+let startY = 0;
 
+const report = document.getElementById("shiftReport");
+
+report.addEventListener("touchstart", e => {
+  startY = e.touches[0].clientY;
+});
+
+report.addEventListener("touchend", e => {
+  const endY = e.changedTouches[0].clientY;
+  const diff = endY - startY;
+
+  // свайп вниз
+  if (diff > 80) {
+    report.classList.remove("show");
+  }
+});
+  
 </script>
 
 </body>
