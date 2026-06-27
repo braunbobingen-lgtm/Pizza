@@ -374,7 +374,14 @@ background:#ddd;
 font-size:22px;
 
 }
+#shiftReport {
+  transition: .35s;
+}
 
+/* свернутое состояние */
+#shiftReport.collapsed {
+  bottom: -60vh;
+}
 </style>
 </head>
 
@@ -476,7 +483,9 @@ font-size:22px;
 
 <!-- SCHICHTBERICHT -->
 <div class="card" id="shiftReport">
-  <div class="label">Schichtbericht</div>
+<div class="label" id="reportHeader" style="cursor:pointer;">
+  Schichtbericht ⬇
+</div>
 
   <div class="row">
     <span>Anzahl Adressen</span>
@@ -945,6 +954,20 @@ report.addEventListener("touchend", e => {
     report.classList.remove("show");
   }
 });
+const report = document.getElementById("shiftReport");
+const reportHeader = document.getElementById("reportHeader");
+
+let reportCollapsed = false;
+
+reportHeader.onclick = () => {
+  reportCollapsed = !reportCollapsed;
+
+  if (reportCollapsed) {
+    report.classList.add("collapsed");
+  } else {
+    report.classList.remove("collapsed");
+  }
+};
   
 </script>
 
