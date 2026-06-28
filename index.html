@@ -352,25 +352,22 @@ bottom:0;
 }
 
 #closeReport{
+    position:absolute;
+    right:18px;
+    top:18px;
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#ddd;
 
-position:absolute;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-right:18px;
-
-top:18px;
-
-width:42px;
-
-height:42px;
-
-border:none;
-
-border-radius:50%;
-
-background:#ddd;
-
-font-size:22px;
-
+    padding:0;
+    line-height:1;
+    font-size:24px;
 }
 
 #reportBackdrop{
@@ -395,6 +392,7 @@ font-size:22px;
 <div class="app">
 
 <h2>📷 QR-Scanner</h2>
+
 <button id="scanToggle" class="scan-btn">▶️ Scannen</button>
 
 <div id="scannerOverlay">
@@ -419,6 +417,11 @@ font-size:22px;
       <span>Scanner</span>
   </button>
 
+<button id="addBtn">
+      <div class="icon">➕</div>
+      <span>Adresse</span>
+  </button>
+
  <button id="callBtn" disabled>
       <div class="icon">📞</div>
       <span>Anrufen</span>
@@ -427,11 +430,6 @@ font-size:22px;
   <button id="mapsNav">
       <div class="icon">🧭</div>
       <span>Navigation</span>
-  </button>
-
- <button id="addBtn">
-      <div class="icon">➕</div>
-      <span>Neue Adresse</span>
   </button>
 
   <button id="reportNav">
@@ -447,7 +445,6 @@ font-size:22px;
       <div class="label">Adresse</div>
       <div class="value" id="address">—</div>
     </div>
-    <button class="zufugen-btn" id="addBtn">➕ </button>
   </div>
 
   <div class="row">
