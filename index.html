@@ -252,9 +252,7 @@ button {
     background:rgba(255,255,255,.2);
     color:white;
 }
-
 #bottomBar{
-
 position:fixed;
 
 left:12px;
@@ -277,7 +275,7 @@ align-items:center;
 
 box-shadow:0 10px 30px rgba(0,0,0,.15);
 
-z-index:9998;
+z-index:9100;
 
 }
 
@@ -333,7 +331,7 @@ left:0;
 right:0;
 bottom:-100%;
 
-z-index:9999;
+z-index:9200;
 
 transition:.35s;
 
@@ -382,7 +380,7 @@ font-size:22px;
     opacity:0;
     visibility:hidden;
     transition:.3s;
-    z-index:9998;
+    z-index:9000;
 }
 
 #reportBackdrop.show{
@@ -554,6 +552,8 @@ font-size:22px;
 </div>
 
 </div>
+
+<div id="reportBackdrop"></div>
 
 <script>
 const streetHints = document.getElementById("streetHints");
@@ -953,6 +953,5 @@ backdrop.onclick = () => {
 };
 
 </script>
-<div id="reportBackdrop"></div>
 </body>
 </html>
