@@ -373,15 +373,21 @@ background:#ddd;
 
 font-size:22px;
 
-#shiftReport {
-  transition: .35s;
 }
 
-/* свернутое состояние */
-#shiftReport.collapsed {
-  bottom: -60vh;
+#reportBackdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    opacity:0;
+    visibility:hidden;
+    transition:.3s;
+    z-index:9998;
 }
 
+#reportBackdrop.show{
+    opacity:1;
+    visibility:visible;
 }
 
 </style>
@@ -485,9 +491,7 @@ font-size:22px;
 
 <!-- SCHICHTBERICHT -->
 <div class="card" id="shiftReport">
-  <div class="label" id="reportHeader" style="cursor:pointer;">
-  Schichtbericht ⬇
-  </div>
+  <div class="label">Schichtbericht</div>
 
   <div class="row">
     <span>Anzahl Adressen</span>
@@ -787,11 +791,15 @@ location.href="https://www.google.com/maps/search/?api=1&query="+encodeURICompon
 
 }
 
-document.getElementById("reportNav").onclick=()=>{
+const report = document.getElementById("shiftReport");
+const backdrop = document.getElementById("reportBackdrop");
 
-document.getElementById("shiftReport").classList.add("show");
+document.getElementById("reportNav").onclick = () => {
+    report.classList.add("show");
+    backdrop.classList.add("show");
+};
 
-}
+
 
 document.getElementById("closeScanner").onclick=stopScanner;
 
@@ -934,29 +942,17 @@ editAddress.addEventListener("input", () => {
     streetHints.appendChild(div);
   });
 });
-document.getElementById("closeReport").onclick=()=>{
-
-document.getElementById("shiftReport").classList.remove("show");
-
-}
-
-const report = document.getElementById("shiftReport");
-const reportHeader = document.getElementById("reportHeader");
-
-let reportCollapsed = false;
-
-reportHeader.onclick = () => {
-  reportCollapsed = !reportCollapsed;
-
-  if (reportCollapsed) {
-    report.classList.add("collapsed");
-  } else {
-    report.classList.remove("collapsed");
-  }
+document.getElementById("closeReport").onclick = () => {
+    report.classList.remove("show");
+    backdrop.classList.remove("show");
 };
 
+backdrop.onclick = () => {
+    report.classList.remove("show");
+    backdrop.classList.remove("show");
+};
 
 </script>
-
+<div id="reportBackdrop"></div>
 </body>
 </html>
