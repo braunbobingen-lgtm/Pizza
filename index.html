@@ -419,9 +419,19 @@ font-size:22px;
       <span>Scanner</span>
   </button>
 
+ <button id="callBtn" disabled>
+      <div class="icon">📞</div>
+      <span>Anrufen</span>
+  </button>
+
   <button id="mapsNav">
       <div class="icon">🧭</div>
       <span>Navigation</span>
+  </button>
+
+ <button id="addBtn">
+      <div class="icon">➕</div>
+      <span>Neue Adresse</span>
   </button>
 
   <button id="reportNav">
@@ -521,7 +531,6 @@ font-size:22px;
     <b id="reportResult">0.00</b>
   </div>
 </div>
-<button id="closeReport">✕</button>
 <!-- MANUELL HINZUFÜGEN / BEARBEITEN -->
 <div id="editBox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:1000;">
   <div style="
@@ -553,7 +562,9 @@ font-size:22px;
 
 </div>
 
-<div id="reportBackdrop"></div>
+<div id="reportBackdrop">
+  <button id="closeReport">✕</button>
+</div>
 
 <script>
 const streetHints = document.getElementById("streetHints");
