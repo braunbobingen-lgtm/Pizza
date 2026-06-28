@@ -373,7 +373,6 @@ background:#ddd;
 
 font-size:22px;
 
-}
 #shiftReport {
   transition: .35s;
 }
@@ -382,6 +381,9 @@ font-size:22px;
 #shiftReport.collapsed {
   bottom: -60vh;
 }
+
+}
+
 </style>
 </head>
 
@@ -483,9 +485,9 @@ font-size:22px;
 
 <!-- SCHICHTBERICHT -->
 <div class="card" id="shiftReport">
-<div class="label" id="reportHeader" style="cursor:pointer;">
+  <div class="label" id="reportHeader" style="cursor:pointer;">
   Schichtbericht ⬇
-</div>
+  </div>
 
   <div class="row">
     <span>Anzahl Adressen</span>
@@ -937,23 +939,7 @@ document.getElementById("closeReport").onclick=()=>{
 document.getElementById("shiftReport").classList.remove("show");
 
 }
-let startY = 0;
 
-const report = document.getElementById("shiftReport");
-
-report.addEventListener("touchstart", e => {
-  startY = e.touches[0].clientY;
-});
-
-report.addEventListener("touchend", e => {
-  const endY = e.changedTouches[0].clientY;
-  const diff = endY - startY;
-
-  // свайп вниз
-  if (diff > 80) {
-    report.classList.remove("show");
-  }
-});
 const report = document.getElementById("shiftReport");
 const reportHeader = document.getElementById("reportHeader");
 
@@ -968,7 +954,8 @@ reportHeader.onclick = () => {
     report.classList.remove("collapsed");
   }
 };
-  
+
+
 </script>
 
 </body>
