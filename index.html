@@ -425,9 +425,8 @@ bottom:0;
 
 <div class="app">
 
-    <h2>📷 QR-Scanner</h2>
+    <h2>🚚 Lieferungen</h2>
 
-    <button id="scanToggle" class="scan-btn">▶️ Scannen</button>
 
     <!-- Scanner -->
     <div id="scannerOverlay">
@@ -861,7 +860,7 @@ async function startScanner(){
 
     scannerRunning=true;
 
-    scanToggle.textContent="⏹ Stoppen";
+    
 }
 
 
@@ -880,10 +879,9 @@ function stopScanner(){
 
     document.getElementById("scannerOverlay").style.display="none";
 
-    scanToggle.textContent="▶️ Scannen";
+    
 }
 
-scanToggle.onclick = () => scannerRunning ? stopScanner() : startScanner();
 
 document.getElementById("scanNav").onclick=()=>{
 
