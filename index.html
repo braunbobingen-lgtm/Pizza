@@ -391,182 +391,263 @@ bottom:0;
     visibility:visible;
 }
 
+#infoCard{
+    display:none;
+}
+
+#infoOverlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:9999;
+
+    justify-content:center;
+    align-items:center;
+}
+
+#infoOverlay.show{
+    display:flex;
+}
+
+#infoWindow{
+    width:90%;
+    max-width:360px;
+    background:#fff;
+    border-radius:18px;
+    padding:18px;
+}
+
 </style>
 </head>
 
 <body>
+
 <div class="app">
 
-<h2>📷 QR-Scanner</h2>
+    <h2>📷 QR-Scanner</h2>
 
-<button id="scanToggle" class="scan-btn">▶️ Scannen</button>
+    <button id="scanToggle" class="scan-btn">▶️ Scannen</button>
 
-<div id="scannerOverlay">
+    <!-- Scanner -->
+    <div id="scannerOverlay">
+        <video id="scannerVideo"></video>
 
-  <video id="scannerVideo"></video>
+        <div class="scanner-dark"></div>
 
-  <div class="scanner-dark"></div>
+        <div class="scan-box">
+            <div class="scan-line"></div>
+        </div>
 
-  <div class="scan-box">
-    <div class="scan-line"></div>
-  </div>
-
-  <button id="closeScanner">✕</button>
-  
-
-</div>
-
-<div id="bottomBar">
-
-  <button id="scanNav">
-      <div class="icon">📷</div>
-      <span>Scanner</span>
-  </button>
-
-<button id="addBtn">
-      <div class="icon">➕</div>
-      <span>Adresse</span>
-  </button>
-
- <button id="callBtn" disabled>
-      <div class="icon">📞</div>
-      <span>Anrufen</span>
-  </button>
-
-  <button id="mapsNav">
-      <div class="icon">🧭</div>
-      <span>Navigation</span>
-  </button>
-
-  <button id="reportNav">
-      <div class="icon">📋</div>
-      <span>Bericht</span>
-  </button>
-
-</div>
-
-<div class="card">
-  <div class="row">
-    <div>
-      <div class="label">Adresse</div>
-      <div class="value" id="address">—</div>
+        <button id="closeScanner">✕</button>
     </div>
-  </div>
 
-  <div class="row">
-    <div>
-      <div class="label">Telefon</div>
-      <div class="value" id="phone">—</div>
+    <!-- BottomBar -->
+    <div id="bottomBar">
+
+        <button id="scanNav">
+            <div class="icon">📷</div>
+            <span>Scanner</span>
+        </button>
+
+        <button id="addBtn">
+            <div class="icon">➕</div>
+            <span>Adresse</span>
+        </button>
+
+        <button id="callNav" disabled>
+            <div class="icon">📞</div>
+            <span>Anrufen</span>
+        </button>
+
+        <button id="mapsNav">
+            <div class="icon">🧭</div>
+            <span>Navigation</span>
+        </button>
+
+        <button id="reportNav">
+            <div class="icon">📋</div>
+            <span>Bericht</span>
+        </button>
+
     </div>
-    <button class="call-btn" id="callBtn" disabled>📞</button>
-  </div>
 
-  <div class="row">
-    <div>
-      <div class="label">Betrag</div>
-      <div class="value" id="amount">—</div>
+    <!-- Popup -->
+    <div id="infoOverlay">
+
+        <div id="infoWindow">
+
+            <div class="card">
+
+                <div class="row">
+                    <div>
+                        <div class="label">Adresse</div>
+                        <div class="value" id="address">—</div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        <div class="label">Telefon</div>
+                        <div class="value" id="phone">—</div>
+                    </div>
+
+                    <button class="call-btn" id="callBtn" disabled>📞</button>
+                </div>
+
+                <div class="row">
+                    <div>
+                        <div class="label">Betrag</div>
+                        <div class="value" id="amount">—</div>
+                    </div>
+
+                    <button class="zufugen-btn" id="editBtn">✏️</button>
+                </div>
+
+                <div class="buttons">
+                    <button class="google" id="googleBtn" disabled>
+                        Google Maps
+                    </button>
+
+                    <button class="apple" id="appleBtn" disabled>
+                        Apple Maps
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-    <button class="zufugen-btn" id="editBtn">✏️</button>
-  </div>
 
-  <div class="buttons">
-  <button class="google" id="googleBtn" disabled>Google Maps</button>
-  <button class="apple" id="appleBtn" disabled>Apple Maps</button>
- </div>
-</div>
+    <!-- Verlauf -->
+    <div class="card">
 
+        <div class="label">Verlauf</div>
 
+        <div id="history"></div>
 
-<div class="card">
-  <div class="label">Verlauf   </div>
-  <div id="history"></div>
-  <button id="deleteBtn" style="margin-top:10px;background:#ff3b30;color:white;">
-    🗑 Löschen
-  </button>
-</div>
-<div id="confirmBox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:1000;">
-  <div style="background:#fff; margin:40% auto; padding:20px; width:85%; max-width:320px; border-radius:16px; text-align:center;">
-    <div style="font-size:16px; margin-bottom:20px;">
-      Eintrag wirklich löschen?
+        <button id="deleteBtn"
+            style="margin-top:10px;background:#ff3b30;color:white;">
+            🗑 Löschen
+        </button>
+
     </div>
-    <div style="display:flex; gap:10px;">
-      <button id="cancelDel" style="flex:1;padding:12px;border-radius:12px;border:none;background:#ddd;">
-        Abbrechen
-      </button>
-      <button id="okDel" style="flex:1;padding:12px;border-radius:12px;border:none;background:#ff3b30;color:white;">
-        Löschen
-      </button>
+
+    <!-- Confirm -->
+    <div id="confirmBox"
+         style="display:none;position:fixed;inset:0;
+                background:rgba(0,0,0,.4);z-index:1000;">
+
+        <div style="
+            background:#fff;
+            margin:40% auto;
+            padding:20px;
+            width:85%;
+            max-width:320px;
+            border-radius:16px;
+            text-align:center;">
+
+            <div style="font-size:16px;margin-bottom:20px;">
+                Eintrag wirklich löschen?
+            </div>
+
+            <div style="display:flex;gap:10px;">
+
+                <button id="cancelDel"
+                    style="flex:1;padding:12px;border-radius:12px;
+                    border:none;background:#ddd;">
+                    Abbrechen
+                </button>
+
+                <button id="okDel"
+                    style="flex:1;padding:12px;border-radius:12px;
+                    border:none;background:#ff3b30;color:white;">
+                    Löschen
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
-</div>
 
-<!-- SCHICHTBERICHT -->
-<div class="card" id="shiftReport">
-  <div class="label">Schichtbericht</div>
+    <!-- Schichtbericht -->
+    <div class="card" id="shiftReport">
 
-  <div class="row">
-    <span>Anzahl Adressen</span>
-    <b id="reportCount">0</b>
-  </div>
+        <div class="label">Schichtbericht</div>
 
-  <div class="row">
-    <span>Summe Betrag (€)</span>
-    <b id="reportSum">0.00</b>
-  </div>
+        <div class="row">
+            <span>Anzahl Adressen</span>
+            <b id="reportCount">0</b>
+        </div>
 
-  <div class="row">
-    <span>Lohn (€)</span>
-    <input id="lohn" type="number" step="0.01">
-  </div>
+        <div class="row">
+            <span>Summe Betrag (€)</span>
+            <b id="reportSum">0.00</b>
+        </div>
 
-  <div class="row">
-    <span>Benzin (€)</span>
-    <input id="benzin" type="number" step="0.01">
-  </div>
+        <div class="row">
+            <span>Lohn (€)</span>
+            <input id="lohn" type="number" step="0.01">
+        </div>
 
-  <div class="row">
-    <span>Sonstige (€)</span>
-    <input id="sonstige" type="number" step="0.01">
-  </div>
+        <div class="row">
+            <span>Benzin (€)</span>
+            <input id="benzin" type="number" step="0.01">
+        </div>
 
-  <div class="row">
-    <span><b>Ergebnis (€)</b></span>
-    <b id="reportResult">0.00</b>
-  </div>
-</div>
-<!-- MANUELL HINZUFÜGEN / BEARBEITEN -->
-<div id="editBox" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:1000;">
-  <div style="
-    background:#fff;
-    margin:20% auto;
-    padding:20px;
-    width:85%;
-    max-width:340px;
-    border-radius:16px;
-  ">
-    <h3 style="margin-top:0;text-align:center">Eintrag</h3>
+        <div class="row">
+            <span>Sonstige (€)</span>
+            <input id="sonstige" type="number" step="0.01">
+        </div>
 
-    <label class="label">Adresse</label>
-    <input id="editAddress" type="text">
-    <div id="streetHints"></div>
+        <div class="row">
+            <span><b>Ergebnis (€)</b></span>
+            <b id="reportResult">0.00</b>
+        </div>
 
-    <label class="label">Telefon</label>
-    <input id="editPhone" type="tel">
-
-    <label class="label">Betrag (€)</label>
-    <input id="editAmount" type="number" step="0.01">
-
-    <div style="display:flex; gap:10px; margin-top:15px;">
-      <button id="editCancel" class="gray">Abbrechen</button>
-      <button id="editSave" class="google">Speichern</button>
     </div>
-  </div>
-</div>
+
+    <!-- Edit -->
+    <div id="editBox"
+         style="display:none;position:fixed;inset:0;
+                background:rgba(0,0,0,.4);z-index:1000;">
+
+        <div style="
+            background:#fff;
+            margin:20% auto;
+            padding:20px;
+            width:85%;
+            max-width:340px;
+            border-radius:16px;">
+
+            <h3 style="margin-top:0;text-align:center;">Eintrag</h3>
+
+            <label class="label">Adresse</label>
+            <input id="editAddress" type="text">
+
+            <div id="streetHints"></div>
+
+            <label class="label">Telefon</label>
+            <input id="editPhone" type="tel">
+
+            <label class="label">Betrag (€)</label>
+            <input id="editAmount" type="number" step="0.01">
+
+            <div style="display:flex;gap:10px;margin-top:15px;">
+                <button id="editCancel" class="gray">Abbrechen</button>
+                <button id="editSave" class="google">Speichern</button>
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
 <div id="reportBackdrop">
-  <button id="closeReport">✕</button>
+    <button id="closeReport">✕</button>
 </div>
 
 <script>
@@ -646,6 +727,26 @@ function renderHistory() {
 
   history.forEach((item, index) => {
     const div = document.createElement("div");
+  let pressTimer;
+
+div.addEventListener("touchstart", () => {
+
+    pressTimer = setTimeout(() => {
+
+        fill(item, index);
+        document.getElementById("infoOverlay").classList.add("show");
+
+    }, 2000); // 2 секунды
+
+});
+
+div.addEventListener("touchend", () => {
+    clearTimeout(pressTimer);
+});
+
+div.addEventListener("touchcancel", () => {
+    clearTimeout(pressTimer);
+});
     div.className =
       "history-item" +
       (index === selectedIndex ? " active" : "") +
@@ -964,6 +1065,16 @@ document.getElementById("closeReport").onclick = () => {
 backdrop.onclick = () => {
     report.classList.remove("show");
     backdrop.classList.remove("show");
+};
+
+const overlay = document.getElementById("infoOverlay");
+
+overlay.onclick = e => {
+
+    if(e.target === overlay){
+        overlay.classList.remove("show");
+    }
+
 };
 
 </script>
