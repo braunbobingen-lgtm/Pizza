@@ -1114,7 +1114,6 @@ invoiceCamera.addEventListener("change", async function () {
 function parseInvoice(text){
 
     let phone = "";
-    let amount = "";
     let address = "";
 
     // ---------- Телефон ----------
@@ -1125,23 +1124,14 @@ function parseInvoice(text){
     }
 
     // ---------- Сумма ----------
-    const amountMatches = [...text.matchAll(/SUMME\s*([\d]+[.,]\d{2})/gi)];
+    // ---------- Betrag ----------
+let amount = "";
 
-if (amountMatches.length) {
+const amounts = text.match(/\d{1,3}[.,]\d{2}/g);
 
-    amount = amountMatches[amountMatches.length - 1][1]
-        .replace(",", ".");
-
-} else {
-
-    const topMatch = text.match(/Summe\s*([\d]+[.,]\d{2})/i);
-
-    if (topMatch) {
-        amount = topMatch[1].replace(",", ".");
-    }
-
+if (amounts && amounts.length) {
+    amount = amounts[amounts.length - 1].replace(",", ".");
 }
-
     // ---------- Adresse ----------
 const lines = text.split("\n").map(l => l.trim());
 
