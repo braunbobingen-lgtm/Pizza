@@ -9,6 +9,13 @@
 import QrScanner from "https://cdn.jsdelivr.net/npm/qr-scanner@1.4.2/qr-scanner.min.js";
 window.QrScanner = QrScanner;
 </script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<input
+    type="file"
+    id="invoiceCamera"
+    accept="image/*"
+    capture="environment"
+    style="display:none">
 
 <style>
 body {
@@ -1076,8 +1083,82 @@ overlay.onclick = e => {
 };
 
 document.getElementById("invoiceNav").onclick = () => {
-    openInvoiceScanner();
+    document.getElementById("invoiceCamera").click();
 };
+
+const invoiceCamera = document.getElementById("invoiceCamera");
+
+invoiceCamera.addEventListener("change", async function () {
+
+    if (!this.files.length) return;
+
+    const file = this.files[0];
+
+    document.body.style.cursor = "wait";
+
+    const result = await Tesseract.recognize(
+        file,
+        "deu"
+    );
+
+    document.body.style.cursor = "default";
+
+    const text = result.data.text;
+
+    console.log(text);
+
+    parseInvoice(text);
+
+});
+
+function parseInvoice(text){
+
+    let phone = "";
+    let amount = "";
+    let address = "";
+
+    // ---------- Телефон ----------
+    const phoneMatch = text.match(/(\+49[\d\s\/-]+|0\d[\d\s\/-]{7,})/);
+
+    if(phoneMatch){
+        phone = phoneMatch[1].replace(/\s/g,"");
+    }
+
+    // ---------- Сумма ----------
+    const amountMatch = text.match(/SUMME\s+(\d+,\d{2})/i);
+
+    if(amountMatch){
+        amount = amountMatch[1].replace(",",".");
+    }
+
+    // ---------- Адрес ----------
+    const lines = text.split("\n");
+
+    for(let i=0;i<lines.length;i++){
+
+        if(/\d{5}/.test(lines[i]) && /\d+/.test(lines[i])){
+
+            address = lines[i].trim();
+
+            if(i+1<lines.length){
+
+                address += ", " + lines[i+1].trim();
+
+            }
+
+            break;
+
+        }
+
+    }
+
+    openEdit();
+
+    editAddress.value = address;
+    editPhone.value = phone;
+    editAmount.value = amount;
+
+}
 
 </script>
 </body>
