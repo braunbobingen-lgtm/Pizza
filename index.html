@@ -449,6 +449,11 @@ bottom:0;
             <span>Scanner</span>
         </button>
 
+        <button id="invoiceNav">
+            <div class="icon">📄</div>
+            <span>Rechnung</span>
+        </button>
+
         <button id="addBtn">
             <div class="icon">➕</div>
             <span>Adresse</span>
@@ -1068,6 +1073,10 @@ overlay.onclick = e => {
         overlay.classList.remove("show");
     }
 
+};
+
+document.getElementById("invoiceNav").onclick = () => {
+    openInvoiceScanner();
 };
 
 </script>
