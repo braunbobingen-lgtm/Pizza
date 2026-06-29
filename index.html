@@ -1125,33 +1125,37 @@ function parseInvoice(text){
     }
 
     // ---------- Сумма ----------
-    const amountMatch = text.match(/SUMME\s+(\d+,\d{2})/i);
+    const amountMatches = [...text.matchAll(/SUMME\s*([\d]+[.,]\d{2})/gi)];
 
-    if(amountMatch){
-        amount = amountMatch[1].replace(",",".");
+if (amountMatches.length) {
+
+    amount = amountMatches[amountMatches.length - 1][1]
+        .replace(",", ".");
+
+} else {
+
+    const topMatch = text.match(/Summe\s*([\d]+[.,]\d{2})/i);
+
+    if (topMatch) {
+        amount = topMatch[1].replace(",", ".");
     }
 
-    // ---------- Адрес ----------
-    const lines = text.split("\n");
+}
 
-    for(let i=0;i<lines.length;i++){
+    // ---------- Adresse ----------
+const lines = text.split("\n").map(l => l.trim());
 
-        if(/\d{5}/.test(lines[i]) && /\d+/.test(lines[i])){
+for (let line of lines) {
 
-            address = lines[i].trim();
-
-            if(i+1<lines.length){
-
-                address += ", " + lines[i+1].trim();
-
-            }
-
-            break;
-
-        }
-
+    if (
+        /\d{5}/.test(line) &&
+        /(str|straße|platz|weg|gasse|ring|allee)/i.test(line)
+    ) {
+        address = line;
+        break;
     }
 
+}
     openEdit();
 
     editAddress.value = address;
