@@ -1144,13 +1144,20 @@ for (let line of lines) {
         address = line;
         break;
     }
-
 }
-    openEdit();
 
-    editAddress.value = address;
-    editPhone.value = phone;
-    editAmount.value = amount;
+// Исправление адреса
+address = address
+    .replace(/_/g, " ")
+    .replace(/\s*,\s*/g, ", ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+openEdit();
+
+editAddress.value = address;
+editPhone.value = phone;
+editAmount.value = amount;
 
 }
 
